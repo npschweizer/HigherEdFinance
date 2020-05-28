@@ -57,12 +57,17 @@ fluidPage(
                      degree-granting four-year public and private institutions in the 
                      United States that are eligible to participate in Title IV financial-aid 
                      programs and that had at least 500 students enrolled in the fall of 2017.
-                     Tuition and fees excludes room and board. Intructino costs do not included expenses
+                     Tuition and fees excludes room and board. Intruction costs do not included expenses
                      categorized as academic support, such as academic administration 
                      and course development. For more information on the dataset visit
                      https://www.chronicle.com/article/Colleges-That-Spent-Far-Less/246669."
               
-            ))
+            )),
+       print(h4("'Revenue' indicates funds derived from the payment of tuition and fees on an 
+                aggregate or per student basis as noted. 'Spending' indicates funds expended
+                on instructional costs on aggregate or per student basis, as noted."
+                
+       ))
        
          
      )
