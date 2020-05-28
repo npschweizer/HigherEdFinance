@@ -1,30 +1,18 @@
 library(ggplot2)
-Pie <-
-  ggplot(df_tot,
-         aes(
-           x = "",
-           y = "count",
-           fill = df_tot$SpendingExceedsTuition
-         ))
-Pie + geom_bar(width = 1, stat = "identity") + coord_polar("y", start = 0)
-
+library(rsconnect)
+rsconnect::deployApp(getwd)
 options(scipen=999) #Remove scientific notation
 
-Point = ggplot(
-  df_tot,
-  aes(
-    y = df_tot$SpendingPerStudent,
-    x = df_tot$RevenuePerStudent
-  ) + facet_grid()
-)
-Point + geom_point() + labs(y = "Instructional Spending Per Student", x = "Revenue from Tuition and Fees Per Student") #+
+#Article statistics are derived from the commands below
+median(df_tot$Revenue.from.tuition.and.fees..minus.spending.on.instruction)
+median(df_tot$Revenue.from.tuition.and.fees..minus.spending.on.instruction/ df_tot$Total.enrollment..fall.2017)
+median(df_tot$SpendtoRevenueRatio)
+median(df_tot$Revenue.from.tuition.and.fees/df_tot$Spending.on.instruction)
+median(df_tot$Revenue.from.tuition.and.fees..minus.spending.on.instruction)
 
+summary(filter(df_tot, Type == "Private"))
+summary(filter(df_tot, Type == "Public"))    
+summary(filter(df_tot, Tuition.and.fees.revenue.as.percentage.of.all.revenue  <= 25))
+summary(filter(df_tot, Type == "Public"))   
 
-Histo = ggplot(df_tot, aes(df_tot$Revenue.from.tuition.and.fees..minus.spending.on.instruction.per.student))
-Histo + geom_histogram(binwidth = 500)
-
-
-
-HistoRevProp = ggplot(df_tot, aes(df_tot$SpendingPerStudent))
-HistoRevProp + geom_freqpoly(binwidth = 500) + ggtitle("Instructional Spending per Student")
 
