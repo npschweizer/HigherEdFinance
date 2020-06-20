@@ -33,18 +33,45 @@ shinyServer(function(input, output, session) {
   #+ theme(plot.title = element_text(size=22))
   )
   
-  output$SpendRevDiffOverRevPerScatter <- renderPlot(
+  output$SpendRevDiffOverRevPerScatterUnder25 <- renderPlot(
     df_tot%>%
       filter(Type==input$Type) %>%
+      #filter(Tuition.and.fees.revenue.as.percentage.of.all.revenue<= 25) %>%
     ggplot(
     aes(
-      y = Revenue.from.tuition.and.fees..minus.spending.on.instruction,
+      y = Revenue.from.tuition.and.fees..minus.spending.on.instruction/ Total.enrollment..fall.2017 ,
       x = Tuition.and.fees.revenue.as.percentage.of.all.revenue
     )
   ) +
-  ylim(-10000000, 10000000) +
+  coord_cartesian(ylim = c(-200000, 25000)) +
   scale_color_gradient(low = "blue", high = "red") +
   geom_point() 
+    +labs(y = "Revenue from Tuition and Fees Minus Spending on Instruction", x = "Tuition and Fees as Percentage of All Revenue") 
+    +scale_y_continuous(labels = scales::dollar_format())
+    +scale_x_continuous(labels = scales::percent_format())
+    +ggtitle("Cost Difference as a Function of Revenue Proportions" )
+  )
+  
+  output$info <- renderText({
+   #df_tot %>%
+      #filter(Institution==input$Type$plot_click$Institution ) %>%
+    input$Type 
+    
+ # })
+  
+  output$SpendRevDiffOverRevPerScatter <- renderPlot(
+    df_tot%>%
+      filter(Type==input$Type) %>%
+      filter(Tuition.and.fees.revenue.as.percentage.of.all.revenue<= 25) %>%
+      ggplot(
+        aes(
+          y = Revenue.from.tuition.and.fees..minus.spending.on.instruction/ Total.enrollment..fall.2017 ,
+          x = Tuition.and.fees.revenue.as.percentage.of.all.revenue
+        )
+      ) +
+      coord_cartesian(ylim = c(-200000, 10000)) +
+      scale_color_gradient(low = "blue", high = "red") +
+      geom_point() 
     +labs(y = "Revenue from Tuition and Fees Minus Spending on Instruction", x = "Tuition and Fees as Percentage of All Revenue") 
     +scale_y_continuous(labels = scales::dollar_format())
     +scale_x_continuous(labels = scales::percent_format())
